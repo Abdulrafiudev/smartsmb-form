@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The 3-Number Business Health Check — SMARTSMB Advisory</title>
+    <style>
+      :root {
+        --navy: #1b3a6b;
+        --blue: #2e5fa3;
+        --gold: #c9973a;
+        --gold-line: #d9cba3;
+        --cream: #f7f4ec;
+        --dark: #2b2b2b;
+        --white: #ffffff;
+        --muted: #8a8a8a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #efeae0;
+        font-family: "Calibri", "Segoe UI", Carlito, sans-serif;
+        color: var(--dark);
+        -webkit-font-smoothing: antialiased;
+      }
+      .page {
+        max-width: 760px;
+        margin: 0 auto;
+        background: var(--white);
+        min-height: 100vh;
+        box-shadow: 0 0 40px rgba(27, 58, 107, 0.12);
+      }
+      header {
+        background: var(--navy);
+        padding: 34px 40px 28px;
+        position: relative;
+      }
+      header::after {
+        content: "";
+        display: block;
+        height: 3px;
+        background: var(--gold);
+        margin-top: 22px;
+      }
+      .eyebrow {
+        color: var(--gold);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--white);
+        font-size: 30px;
+        margin: 12px 0 6px;
+        line-height: 1.15;
+      }
+      .subtitle {
+        color: var(--cream);
+        font-style: italic;
+        font-size: 15px;
+        margin: 0;
+      }
+
+      .intro {
+        padding: 26px 40px 4px;
+        font-size: 15px;
+        line-height: 1.55;
+        color: var(--dark);
+      }
+
+      .contact {
+        padding: 6px 40px 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .contact .full {
+        grid-column: 1/-1;
+      }
+      label {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: var(--blue);
+        margin-bottom: 4px;
+        letter-spacing: 0.01em;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"] {
+        width: 100%;
+        padding: 9px 11px;
+        border: 1px solid var(--gold-line);
+        border-radius: 5px;
+        font-size: 14.5px;
+        font-family: inherit;
+        color: var(--dark);
+        background: var(--cream);
+      }
+      input:focus {
+        outline: 2px solid var(--blue);
+        outline-offset: 1px;
+        background: var(--white);
+      }
+
+      .sections {
+        padding: 14px 40px 6px;
+      }
+      .card {
+        background: var(--cream);
+        border: 1px solid var(--gold-line);
+        border-radius: 8px;
+        padding: 20px 22px;
+        margin-bottom: 18px;
+      }
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 8px;
+      }
+      .badge {
+        flex: 0 0 auto;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: var(--navy);
+        font-family: Georgia, serif;
+        font-weight: 700;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card h2 {
+        font-family: Georgia, serif;
+        color: var(--navy);
+        font-size: 18px;
+        margin: 2px 0 0;
+      }
+      .card p.desc {
+        font-size: 13.6px;
+        line-height: 1.5;
+        margin: 6px 0 10px;
+        color: var(--dark);
+      }
+      .formula {
+        display: inline-block;
+        background: var(--white);
+        border: 1px solid var(--gold-line);
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 12.8px;
+        margin-bottom: 12px;
+      }
+      .formula .tag {
+        color: var(--gold);
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        margin-right: 6px;
+        font-size: 11px;
+      }
+      .formula .expr {
+        color: var(--navy);
+        font-weight: 700;
+        font-family: Georgia, serif;
+      }
+
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .field-wrap {
+        position: relative;
+      }
+      .field-wrap .naira {
+        position: absolute;
+        left: 10px;
+        top: 31px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .field-wrap input[type="number"] {
+        padding-left: 24px;
+      }
+      input[type="number"] {
+        width: 100%;
+        padding: 9px 11px;
+        border: 1px solid var(--gold-line);
+        border-radius: 5px;
+        font-size: 14.5px;
+        font-family: inherit;
+        color: var(--dark);
+        background: var(--white);
+      }
+
+      .result-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        border-top: 1px dashed var(--gold-line);
+        padding-top: 12px;
+        margin-top: 4px;
+      }
+      .result {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--blue);
+      }
+      .result .value {
+        color: var(--navy);
+        font-family: Georgia, serif;
+        font-size: 16px;
+        margin-left: 6px;
+      }
+
+      .surprise {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12.8px;
+        color: var(--blue);
+        font-style: italic;
+      }
+      .toggle {
+        display: flex;
+        border: 1px solid var(--gold);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .toggle label {
+        margin: 0;
+        font-weight: 700;
+        font-size: 12.5px;
+        padding: 5px 12px;
+        cursor: pointer;
+        color: var(--dark);
+        background: var(--white);
+      }
+      .toggle input {
+        display: none;
+      }
+      .toggle input:checked + span {
+        background: var(--gold);
+        color: var(--navy);
+      }
+      .toggle label span {
+        display: block;
+        padding: 5px 12px;
+        margin: -5px -12px;
+      }
+      .toggle label:first-child {
+        border-right: 1px solid var(--gold-line);
+      }
+
+      .submit-wrap {
+        padding: 8px 40px 30px;
+        text-align: center;
+      }
+      button.primary {
+        background: var(--gold);
+        color: var(--navy);
+        border: none;
+        border-radius: 6px;
+        font-family: Georgia, serif;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 13px 34px;
+        cursor: pointer;
+        transition:
+          transform 0.12s ease,
+          box-shadow 0.12s ease;
+      }
+      button.primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(201, 151, 58, 0.35);
+      }
+      button.primary:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      .hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+
+      .results-panel {
+        display: none;
+        margin: 0 40px 30px;
+        background: var(--navy);
+        border-radius: 8px;
+        padding: 26px 28px;
+        position: relative;
+        overflow: hidden;
+      }
+      .results-panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gold);
+      }
+      .results-panel h3 {
+        font-family: Georgia, serif;
+        color: var(--white);
+        font-size: 20px;
+        margin: 6px 0 10px;
+        text-align: center;
+        line-height: 1.4;
+        font-style: italic;
+      }
+      .results-panel .count {
+        text-align: center;
+        color: var(--gold);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .cta {
+        display: block;
+        text-align: center;
+        background: var(--gold);
+        color: var(--navy);
+        font-weight: 700;
+        font-family: Georgia, serif;
+        padding: 12px 18px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-size: 14.5px;
+      }
+      .results-panel .note {
+        color: var(--cream);
+        font-size: 12.5px;
+        text-align: center;
+        margin-top: 12px;
+      }
+
+      footer {
+        padding: 18px 40px 34px;
+        border-top: 1px solid var(--gold-line);
+      }
+      .foot-text {
+        font-size: 11.5px;
+        color: var(--muted);
+        text-align: center;
+      }
+      .admin-toggle {
+        display: block;
+        margin: 16px auto 0;
+        background: none;
+        border: 1px solid var(--gold-line);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 700;
+        padding: 7px 14px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .admin-panel {
+        display: none;
+        margin-top: 16px;
+        background: var(--cream);
+        border: 1px solid var(--gold-line);
+        border-radius: 6px;
+        padding: 14px 16px;
+      }
+      .admin-panel h4 {
+        font-family: Georgia, serif;
+        color: var(--navy);
+        font-size: 14px;
+        margin: 0 0 10px;
+      }
+      table.subs {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+      table.subs th {
+        text-align: left;
+        color: var(--white);
+        background: var(--navy);
+        padding: 6px 8px;
+        font-size: 11px;
+      }
+      table.subs td {
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--gold-line);
+      }
+      table.subs tr:nth-child(even) td {
+        background: var(--white);
+      }
+      .empty-state {
+        font-size: 12.5px;
+        color: var(--muted);
+        font-style: italic;
+      }
+      .load {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 560px) {
+        header,
+        .intro,
+        .contact,
+        .sections,
+        .submit-wrap,
+        footer {
+          padding-left: 22px;
+          padding-right: 22px;
+        }
+        .results-panel {
+          margin-left: 22px;
+          margin-right: 22px;
+        }
+        .contact {
+          grid-template-columns: 1fr;
+        }
+        .fields {
+          grid-template-columns: 1fr;
+        }
+        .result-row {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="eyebrow">
+          <span>SMARTSMB ADVISORY LIMITED</span
+          ><span>FRACTIONAL FINANCE DIRECTOR FOR SMEs</span>
+        </div>
+        <h1>The 3-Number Business Health Check</h1>
+        <p class="subtitle">
+          A free 5-minute self-assessment for founders who want the truth about
+          their numbers
+        </p>
+      </header>
+
+      <p class="intro">
+        Most founders are working hard but can't say for certain whether the
+        business is actually profitable, how long the cash on hand will last, or
+        which sales are quietly losing money. Answer honestly, using your most
+        recent full month — your results calculate automatically as you type.
+      </p>
+
+      <div class="contact">
+        <div class="full">
+          <label for="fname">Your name *</label>
+          <input type="text" id="fname" placeholder="e.g. Chidinma Okafor" />
+        </div>
+        <div>
+          <label for="fbiz">Business name</label>
+          <input type="text" id="fbiz" placeholder="Optional" />
+        </div>
+        <div>
+          <label for="fcontact">WhatsApp number or email *</label>
+          <input type="text" id="fcontact" placeholder="So we can follow up" />
+        </div>
+      </div>
+
+      <div class="sections">
+        <div class="card" data-section="1">
+          <div class="card-head">
+            <div class="badge">1</div>
+            <h2>Profit vs. Revenue</h2>
+          </div>
+          <p class="desc">
+            Revenue is everything that came into the business. Profit is what's
+            left after every cost is paid — and it's the number that actually
+            determines whether the business is winning.
+          </p>
+          <div class="formula">
+            <span class="tag">FORMULA</span
+            ><span class="expr">Profit = Revenue − Costs</span>
+          </div>
+          <div class="fields">
+            <div class="field-wrap">
+              <label>This month's total revenue</label>
+              <span class="naira">₦</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                min="0"
+                id="revenue"
+                placeholder="0"
+              />
+            </div>
+            <div class="field-wrap">
+              <label>This month's total costs</label>
+              <span class="naira">₦</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                min="0"
+                id="costs"
+                placeholder="0"
+              />
+            </div>
+          </div>
+          <div class="result-row">
+            <div class="result">
+              Your profit this month:<span class="value" id="out-profit"
+                >₦0</span
+              >
+            </div>
+            <div class="surprise">
+              Did this surprise you?
+              <div class="toggle">
+                <label
+                  ><input type="radio" name="s1" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="s1" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-section="2">
+          <div class="card-head">
+            <div class="badge">2</div>
+            <h2>Cash Runway</h2>
+          </div>
+          <p class="desc">
+            If no more money came in from today, how many months could the
+            business keep operating on the cash currently sitting in the
+            account?
+          </p>
+          <div class="formula">
+            <span class="tag">FORMULA</span
+            ><span class="expr"
+              >Cash Runway = Cash on Hand ÷ Average Monthly Spend</span
+            >
+          </div>
+          <div class="fields">
+            <div class="field-wrap">
+              <label>Cash currently in the business</label>
+              <span class="naira">₦</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                min="0"
+                id="cash"
+                placeholder="0"
+              />
+            </div>
+            <div class="field-wrap">
+              <label>Average monthly spend</label>
+              <span class="naira">₦</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                min="0"
+                id="spend"
+                placeholder="0"
+              />
+            </div>
+          </div>
+          <div class="result-row">
+            <div class="result">
+              Your cash runway:<span class="value" id="out-runway"
+                >0 months</span
+              >
+            </div>
+            <div class="surprise">
+              Did this surprise you?
+              <div class="toggle">
+                <label
+                  ><input type="radio" name="s2" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="s2" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" data-section="3">
+          <div class="card-head">
+            <div class="badge">3</div>
+            <h2>True Margin Per Sale</h2>
+          </div>
+          <p class="desc">
+            Not every sale is equally profitable. This is what's actually left
+            from one typical sale after the direct cost of delivering it —
+            before overheads.
+          </p>
+          <div class="formula">
+            <span class="tag">FORMULA</span
+            ><span class="expr"
+              >True Margin = Sale Price − Direct Cost of Delivery</span
+            >
+          </div>
+          <div class="fields">
+            <div class="field-wrap">
+              <label>Price of one typical sale</label>
+              <span class="naira">₦</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                min="0"
+                id="price"
+                placeholder="0"
+              />
+            </div>
+            <div class="field-wrap">
+              <label>Direct cost to deliver it</label>
+              <span class="naira">₦</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                min="0"
+                id="dcost"
+                placeholder="0"
+              />
+            </div>
+          </div>
+          <div class="result-row">
+            <div class="result">
+              Your true margin on that sale:<span class="value" id="out-margin"
+                >₦0</span
+              >
+            </div>
+            <div class="surprise">
+              Did this surprise you?
+              <div class="toggle">
+                <label
+                  ><input type="radio" name="s3" value="Yes" /><span
+                    >Yes</span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="s3" value="No" /><span
+                    >No</span
+                  ></label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-wrap">
+        <button class="primary" id="submitBtn">See My Results</button>
+        <div class="hint" id="submitHint">
+          Name and a WhatsApp number or email are required so we can save your
+          results.
+        </div>
+      </div>
+
+      <div class="results-panel" id="resultsPanel">
+        <div class="count" id="resultsCount"></div>
+        <h3 id="resultsHeadline"></h3>
+        <div class="cta" id="resultsCta">
+          Book your Financial Diagnostic — DM SMARTSMB Advisory on LinkedIn or
+          visit the link in our Featured section.
+        </div>
+        <p class="note">
+          Your answers have been saved. Someone from SMARTSMB Advisory may
+          follow up using the contact you provided.
+        </p>
+      </div>
+
+      <footer>
+        <p class="foot-text">
+          SMARTSMB Advisory Limited · Fractional Finance Director for growing
+          SMEs in Abuja · smartsmbadvisory
+        </p>
+        <button class="admin-toggle" id="adminToggle">
+          SMARTSMB team: view saved submissions
+        </button>
+        <div class="admin-panel" id="adminPanel">
+          <h4>Saved Submissions</h4>
+          <div id="adminContent" class="load">Loading…</div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const nf = new Intl.NumberFormat("en-NG");
+
+      function num(id) {
+        const v = parseFloat($(id).value);
+        return isNaN(v) ? 0 : v;
+      }
+      function naira(n) {
+        return "₦" + nf.format(Math.round(n));
+      }
+
+      function recalc() {
+        const profit = num("revenue") - num("costs");
+        $("out-profit").textContent = naira(profit);
+
+        const spend = num("spend");
+        const runway = spend > 0 ? num("cash") / spend : 0;
+        $("out-runway").textContent = Math.round(runway * 10) / 10 + " months";
+
+        const margin = num("price") - num("dcost");
+        $("out-margin").textContent = naira(margin);
+      }
+      ["revenue", "costs", "cash", "spend", "price", "dcost"].forEach((id) => {
+        $(id).addEventListener("input", recalc);
+      });
+      recalc();
+
+      function surpriseVal(name) {
+        const r = document.querySelector('input[name="' + name + '"]:checked');
+        return r ? r.value : null;
+      }
+
+      $("submitBtn").addEventListener("click", async () => {
+        const name = $("fname").value.trim();
+        const contact = $("fcontact").value.trim();
+        if (!name || !contact) {
+          $("submitHint").textContent =
+            "Please fill in your name and a WhatsApp number or email before submitting.";
+          $("submitHint").style.color = "#B5451B";
+          return;
+        }
+
+        const s1 = surpriseVal("s1"),
+          s2 = surpriseVal("s2"),
+          s3 = surpriseVal("s3");
+        const surprisedCount = [s1, s2, s3].filter((v) => v === "Yes").length;
+
+        const submission = {
+          id:
+            "sub_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8),
+          timestamp: new Date().toISOString(),
+          name,
+          business: $("fbiz").value.trim(),
+          contact,
+          revenue: num("revenue"),
+          costs: num("costs"),
+          profit: num("revenue") - num("costs"),
+          cash: num("cash"),
+          spend: num("spend"),
+          runway:
+            num("spend") > 0
+              ? Math.round((num("cash") / num("spend")) * 10) / 10
+              : 0,
+          price: num("price"),
+          dcost: num("dcost"),
+          margin: num("price") - num("dcost"),
+          surprised_profit: s1,
+          surprised_runway: s2,
+          surprised_margin: s3,
+          surprisedCount,
+        };
+
+        $("submitBtn").disabled = true;
+        $("submitBtn").textContent = "Saving…";
+
+        try {
+          await window.storage.set(
+            submission.id,
+            JSON.stringify(submission),
+            true,
+          );
+        } catch (e) {
+          console.error("Storage error", e);
+        }
+
+        $("submitBtn").disabled = false;
+        $("submitBtn").textContent = "See My Results";
+
+        $("resultsCount").textContent =
+          surprisedCount + " of 3 numbers surprised you";
+        if (surprisedCount >= 2) {
+          $("resultsHeadline").textContent =
+            "If two of these three numbers surprised you, that's exactly what a Financial Diagnostic session uncovers — for your specific business.";
+          $("resultsCta").style.display = "block";
+        } else {
+          $("resultsHeadline").textContent =
+            "Thanks for checking your numbers. Keep this handy and revisit it monthly — if that ever changes to two surprises or more, a Financial Diagnostic is where we find out why.";
+          $("resultsCta").style.display = "none";
+        }
+        $("resultsPanel").style.display = "block";
+        $("resultsPanel").scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      $("adminToggle").addEventListener("click", async () => {
+        const panel = $("adminPanel");
+        const isOpen = panel.style.display === "block";
+        panel.style.display = isOpen ? "none" : "block";
+        if (isOpen) return;
+
+        $("adminContent").textContent = "Loading…";
+        try {
+          const listRes = await window.storage.list("sub_", true);
+          const keys = listRes && listRes.keys ? listRes.keys : [];
+          if (keys.length === 0) {
+            $("adminContent").innerHTML =
+              '<div class="empty-state">No submissions saved yet.</div>';
+            return;
+          }
+          const rows = [];
+          for (const k of keys) {
+            try {
+              const r = await window.storage.get(k, true);
+              if (r && r.value) rows.push(JSON.parse(r.value));
+            } catch (e) {
+              /* skip unreadable entry */
+            }
+          }
+          rows.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+          let html =
+            '<table class="subs"><tr><th>Date</th><th>Name</th><th>Business</th><th>Contact</th><th>Surprised</th></tr>';
+          rows.forEach((r) => {
+            const d = new Date(r.timestamp).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            });
+            html +=
+              "<tr><td>" +
+              d +
+              "</td><td>" +
+              (r.name || "") +
+              "</td><td>" +
+              (r.business || "—") +
+              "</td><td>" +
+              (r.contact || "") +
+              "</td><td>" +
+              r.surprisedCount +
+              " / 3</td></tr>";
+          });
+          html += "</table>";
+          $("adminContent").innerHTML = html;
+        } catch (e) {
+          console.error(e);
+          $("adminContent").innerHTML =
+            '<div class="empty-state">Could not load submissions right now.</div>';
+        }
+      });
+    </script>
+  </body>
+</html>
