@@ -700,17 +700,14 @@
           SMARTSMB Advisory Limited · Fractional Finance Director for growing
           SMEs in Abuja · smartsmbadvisory
         </p>
-        <button class="admin-toggle" id="adminToggle">
-          SmartSMB team: view saved submissions
-        </button>
-        <div class="admin-panel" id="adminPanel">
-          <h4>Saved Submissions</h4>
-          <div id="adminContent" class="load">Loading…</div>
-        </div>
       </footer>
     </div>
 
     <script>
+      // Paste the /exec URL from your deployed Google Apps Script web app here.
+      const GOOGLE_APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbzEIrQu51URfJfh-AFW9HlECen_cFwOC1eOn2BEqUPDCi4Br7IAYgG7VOFhywdQts0R/exec";
+
       const $ = (id) => document.getElementById(id);
       const nf = new Intl.NumberFormat("en-NG");
 
@@ -787,13 +784,34 @@
         $("submitBtn").textContent = "Saving…";
 
         try {
-          await window.storage.set(
-            submission.id,
-            JSON.stringify(submission),
-            true,
-          );
+          if (
+            !GOOGLE_APPS_SCRIPT_URL.startsWith("https://script.google.com/")
+          ) {
+            throw new Error(
+              "The Google Apps Script URL has not been configured.",
+            );
+          }
+
+          const formData = new URLSearchParams();
+          Object.entries(submission).forEach(([key, value]) => {
+            formData.append(key, value == null ? "" : String(value));
+          });
+
+          // Apps Script redirects its response to a Google-hosted URL. no-cors
+          // allows this static page to submit without exposing Sheet access.
+          await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: formData,
+          });
         } catch (e) {
-          console.error("Storage error", e);
+          console.error("Google Sheets submission error", e);
+          $("submitBtn").disabled = false;
+          $("submitBtn").textContent = "See My Results";
+          $("submitHint").textContent =
+            "We couldn't save your answers. Please try again in a moment.";
+          $("submitHint").style.color = "#B5451B";
+          return;
         }
 
         $("submitBtn").disabled = false;
@@ -815,61 +833,6 @@
           behavior: "smooth",
           block: "start",
         });
-      });
-
-      $("adminToggle").addEventListener("click", async () => {
-        const panel = $("adminPanel");
-        const isOpen = panel.style.display === "block";
-        panel.style.display = isOpen ? "none" : "block";
-        if (isOpen) return;
-
-        $("adminContent").textContent = "Loading…";
-        try {
-          const listRes = await window.storage.list("sub_", true);
-          const keys = listRes && listRes.keys ? listRes.keys : [];
-          if (keys.length === 0) {
-            $("adminContent").innerHTML =
-              '<div class="empty-state">No submissions saved yet.</div>';
-            return;
-          }
-          const rows = [];
-          for (const k of keys) {
-            try {
-              const r = await window.storage.get(k, true);
-              if (r && r.value) rows.push(JSON.parse(r.value));
-            } catch (e) {
-              /* skip unreadable entry */
-            }
-          }
-          rows.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-          let html =
-            '<table class="subs"><tr><th>Date</th><th>Name</th><th>Business</th><th>Contact</th><th>Surprised</th></tr>';
-          rows.forEach((r) => {
-            const d = new Date(r.timestamp).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            });
-            html +=
-              "<tr><td>" +
-              d +
-              "</td><td>" +
-              (r.name || "") +
-              "</td><td>" +
-              (r.business || "—") +
-              "</td><td>" +
-              (r.contact || "") +
-              "</td><td>" +
-              r.surprisedCount +
-              " / 3</td></tr>";
-          });
-          html += "</table>";
-          $("adminContent").innerHTML = html;
-        } catch (e) {
-          console.error(e);
-          $("adminContent").innerHTML =
-            '<div class="empty-state">Could not load submissions right now.</div>';
-        }
       });
     </script>
   </body>
